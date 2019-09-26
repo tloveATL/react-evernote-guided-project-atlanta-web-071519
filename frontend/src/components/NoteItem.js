@@ -6,9 +6,9 @@ export class NoteItem extends Component {
 
   render() {
     return (
-    <li onClick={this.props.onClick}>
-    <h2>{this.props.note.title}</h2>
-    <p>{this.truncate()}</p>
+    <li onClick={this.props.selectNote} id={this.props.id}>
+    <h2 id={this.props.id}>{this.props.note.title}</h2>
+    <p id={this.props.id}>{this.truncate()}</p>
     </li>
     )
   }

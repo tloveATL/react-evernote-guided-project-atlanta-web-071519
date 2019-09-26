@@ -9,7 +9,8 @@ class NoteContainer extends Component {
   
     this.state = {
       allNotes: [],
-      selectedNote: []
+      selectedNote: [],
+      noteToEdit: []
     }
   }
 
@@ -21,14 +22,30 @@ class NoteContainer extends Component {
         allNotes: noteData
       }))
   }
+
+  handleSelectNote = (e, note) => {
+    e.persist()
+    console.log("a note was selected!")
+    this.setState({
+      selectedNote: note
+    })
+  }
+
+  handleEditNote = (e, note) => {
+    e.persist()
+    console.log("a note is being edited!")
+    this.setState({
+      noteToEdit: note
+    })
+  }
   
   render() {
     return (
       <Fragment>
         <Search />
         <div className='container'>
-          <Sidebar allNotes={this.state.allNotes}/>
-          <Content />
+          <Sidebar selectNote={this.handleSelectNote} allNotes={this.state.allNotes}/>
+          <Content noteToEdit={this.state.noteToEdit} editNote={this.handleEditNote} selectedNote={this.state.selectedNote} id={this.state.selectedNote.id}/>
         </div>
       </Fragment>
     );
