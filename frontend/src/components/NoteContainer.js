@@ -38,6 +38,18 @@ class NoteContainer extends Component {
       noteToEdit: note
     })
   }
+
+  handleSubmitEdits = (e, id) => {
+    e.preventDefault()
+    console.log("this edited note should be saved", id)
+  }
+
+  handleCancel = (e, id) => {
+    console.log("these changes should not be saved!", id)
+    this.setState({
+      noteToEdit: []
+    })
+  }
   
   render() {
     return (
@@ -45,7 +57,7 @@ class NoteContainer extends Component {
         <Search />
         <div className='container'>
           <Sidebar selectNote={this.handleSelectNote} allNotes={this.state.allNotes}/>
-          <Content noteToEdit={this.state.noteToEdit} editNote={this.handleEditNote} selectedNote={this.state.selectedNote} id={this.state.selectedNote.id}/>
+          <Content handleCancel={this.handleCancel} submitEdits={this.handleSubmitEdits} noteToEdit={this.state.noteToEdit} editNote={this.handleEditNote} selectedNote={this.state.selectedNote} id={this.state.selectedNote.id}/>
         </div>
       </Fragment>
     );
