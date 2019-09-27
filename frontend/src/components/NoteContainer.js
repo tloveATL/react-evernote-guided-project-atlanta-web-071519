@@ -4,15 +4,12 @@ import Sidebar from './Sidebar';
 import Content from './Content';
 
 class NoteContainer extends Component {
-  constructor(props) {
-    super(props)
-  
-    this.state = {
+  state = {
       allNotes: [],
       selectedNote: [],
       noteToEdit: []
     }
-  }
+  
 
   componentDidMount(){
     fetch("http://localhost:3000/api/v1/notes")
@@ -39,13 +36,30 @@ class NoteContainer extends Component {
     })
   }
 
-  handleSubmitEdits = (e, id) => {
+  handleSubmitEdits = (e, note) => {
     e.preventDefault()
-    console.log("this edited note should be saved", id)
-  }
+    console.log("this edited note should be saved", note)
+    fetch(`http://localhost:3000/api/v1/notes/${note.id}`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+    },
+      body: JSON.stringify({
+        title: note.title,
+        body: note.body,
+        user_id: note.user_id
+      })
+  })
+  .then(response => response.json())
+  .then(json => console.log(json))
+}
 
-  handleCancel = (e, id) => {
-    console.log("these changes should not be saved!", id)
+
+
+
+  handleCancel = () => {
+    console.log("these changes were not saved")
     this.setState({
       noteToEdit: []
     })
