@@ -5,7 +5,7 @@ export class NoteEditor extends Component {
     id: this.props.noteToEdit.id,
     title: this.props.noteToEdit.title,
     body: this.props.noteToEdit.body,
-    user_id: this.props.noteToEdit.user.id
+    // user_id: this.props.noteToEdit.user.id
     }
   
 
