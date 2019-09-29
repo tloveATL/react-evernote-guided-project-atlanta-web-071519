@@ -11,7 +11,7 @@ class NoteContainer extends Component {
       allNotes: [],
       selectedNote: [],
       noteToEdit: [],
-      // userID: ""
+      selectedNoteID: null
     }
   }
 
@@ -28,9 +28,13 @@ class NoteContainer extends Component {
     e.persist()
     console.log("a note was selected!")
     this.setState({
-      selectedNote: note
-      // userID: note.user.id
+      selectedNote: note,
+      selectedNoteID: note.id
     })
+  }
+
+  findNote = () => {
+    return this.state.allNotes.find(note => note.id === this.state.selectedNoteID)
   }
 
   handleCreateNewNote = (e) => {
@@ -90,13 +94,17 @@ class NoteContainer extends Component {
       })
   })
   .then(response => response.json())
-  .then(json => console.log(json))
-
-  this.setState({
-    // allNotes: updateList,
-    selectedNote: note,
+  .then(newNote => {
+    const copyNotes = [...this.state.allNotes]
+    const findEditedNote = this.findNote()
+    const index = copyNotes.indexOf(findEditedNote)
+    copyNotes[index] = newNote
+    this.setState({
+    allNotes: copyNotes,
+    selectedNote: newNote,
     noteToEdit: []
   })
+})
 }
 
   handleCancel = () => {
@@ -112,7 +120,7 @@ class NoteContainer extends Component {
         <Search />
         <div className='container'>
           <Sidebar createNote={this.handleCreateNewNote} selectNote={this.handleSelectNote} allNotes={this.state.allNotes}/>
-          <Content handleCancel={this.handleCancel} submitEdits={this.handleSubmitEdits} noteToEdit={this.state.noteToEdit} editNote={this.handleEditNote} selectedNote={this.state.selectedNote} id={this.state.selectedNote.id}/>
+          <Content selectedNoteID={this.state.selectedNoteID} handleCancel={this.handleCancel} submitEdits={this.handleSubmitEdits} noteToEdit={this.state.noteToEdit} editNote={this.handleEditNote} selectedNote={this.state.selectedNote} id={this.state.selectedNote.id}/>
         </div>
       </Fragment>
     );
