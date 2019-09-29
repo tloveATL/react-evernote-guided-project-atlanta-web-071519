@@ -9,9 +9,11 @@ class NoteContainer extends Component {
   
     this.state = {
       allNotes: [],
+      filteredNotes: [],
       selectedNote: [],
       noteToEdit: [],
-      selectedNoteID: null
+      selectedNoteID: null,
+      searchInput: ""
     }
   }
 
@@ -29,12 +31,27 @@ class NoteContainer extends Component {
     console.log("a note was selected!")
     this.setState({
       selectedNote: note,
+      noteToEdit: [],
       selectedNoteID: note.id
     })
   }
 
   findNote = () => {
     return this.state.allNotes.find(note => note.id === this.state.selectedNoteID)
+  }
+
+  handleSearchInput = (e) => {
+    console.log("search results", e.target.value)
+    this.setState({
+      searchInput: e.target.value
+    })
+  }
+
+  filteredDisplay = () => {
+    return this.state.allNotes.filter(note =>
+      note.title.toLowerCase().includes(this.state.searchInput.toLowerCase()) || 
+      note.body.toLowerCase().includes(this.state.searchInput.toLowerCase())
+    )
   }
 
   handleCreateNewNote = (e) => {
@@ -44,7 +61,7 @@ class NoteContainer extends Component {
     const blankNote = {
       title: "Post Title",
       body: "Click to select and then click 'Edit'",
-      user_id: this.state.userID
+      user_id: this.state.selectedNoteID
       }
     fetch("http://localhost:3000/api/v1/notes", {
       method: "POST",
@@ -68,15 +85,6 @@ class NoteContainer extends Component {
       noteToEdit: note,
     })
   }
-  
-  // updateList = (editedNote) => {
-  //   [...this.state.allNotes].map(note => {
-  //     if(note.id === editedNote.id){
-  //       return editedNote
-  //     } else {
-  //         return note}
-  //     }
-  //   )}
 
   handleSubmitEdits = (e, note) => {
     e.preventDefault()
@@ -117,9 +125,9 @@ class NoteContainer extends Component {
   render() {
     return (
       <Fragment>
-        <Search />
+        <Search handleSearchInput={this.handleSearchInput}/>
         <div className='container'>
-          <Sidebar createNote={this.handleCreateNewNote} selectNote={this.handleSelectNote} allNotes={this.state.allNotes}/>
+          <Sidebar createNote={this.handleCreateNewNote} selectNote={this.handleSelectNote} notes={this.filteredDisplay()}/>
           <Content selectedNoteID={this.state.selectedNoteID} handleCancel={this.handleCancel} submitEdits={this.handleSubmitEdits} noteToEdit={this.state.noteToEdit} editNote={this.handleEditNote} selectedNote={this.state.selectedNote} id={this.state.selectedNote.id}/>
         </div>
       </Fragment>
