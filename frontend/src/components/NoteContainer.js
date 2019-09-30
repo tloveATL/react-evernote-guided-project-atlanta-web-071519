@@ -56,12 +56,10 @@ class NoteContainer extends Component {
 
   handleCreateNewNote = (e) => {
     e.persist()
-    console.log("a new note should be created!", e)
-    debugger;
+    console.log("a new note should be created!")
     const blankNote = {
       title: "Post Title",
       body: "Click to select and then click 'Edit'",
-      user_id: this.state.selectedNoteID
       }
     fetch("http://localhost:3000/api/v1/notes", {
       method: "POST",
@@ -88,7 +86,7 @@ class NoteContainer extends Component {
 
   handleSubmitEdits = (e, note) => {
     e.preventDefault()
-    console.log("this edited note should be saved", note)
+    console.log("this edited note should be saved")
     fetch(`http://localhost:3000/api/v1/notes/${note.id}`, {
       method: "PATCH",
       headers: {
@@ -101,7 +99,7 @@ class NoteContainer extends Component {
         user_id: note.user_id
       })
   })
-  .then(response => response.json())
+  .then(resp => resp.json())
   .then(newNote => {
     const copyNotes = [...this.state.allNotes]
     const findEditedNote = this.findNote()
@@ -114,6 +112,27 @@ class NoteContainer extends Component {
   })
 })
 }
+  handleDelete =(e, note) => {
+    e.persist()
+    console.log("this note should be deleted!")
+    fetch(`http://localhost:3000/api/v1/notes/${note.id}`, {
+      method: "DELETE"
+      })
+        .then(resp => resp.json())
+        .then(result => {
+          const filteredNotes = [...this.state.allNotes].filter(
+            note => note.id !== this.state.selectedNoteID
+          )
+          console.log(result.message)
+          debugger;
+          this.setState({
+            allNotes: filteredNotes,
+            selectedNote: [],
+            selectedNoteId: null,
+            noteToEdit: []
+          })
+        })
+    }
 
   handleCancel = () => {
     console.log("these changes were not saved")
@@ -128,7 +147,14 @@ class NoteContainer extends Component {
         <Search handleSearchInput={this.handleSearchInput}/>
         <div className='container'>
           <Sidebar createNote={this.handleCreateNewNote} selectNote={this.handleSelectNote} notes={this.filteredDisplay()}/>
-          <Content selectedNoteID={this.state.selectedNoteID} handleCancel={this.handleCancel} submitEdits={this.handleSubmitEdits} noteToEdit={this.state.noteToEdit} editNote={this.handleEditNote} selectedNote={this.state.selectedNote} id={this.state.selectedNote.id}/>
+          <Content deleteNote={this.handleDelete} 
+                  selectedNoteID={this.state.selectedNoteID} 
+                  handleCancel={this.handleCancel} 
+                  submitEdits={this.handleSubmitEdits} 
+                  noteToEdit={this.state.noteToEdit} 
+                  editNote={this.handleEditNote} 
+                  selectedNote={this.state.selectedNote} 
+                  id={this.state.selectedNote.id}/>
         </div>
       </Fragment>
     );

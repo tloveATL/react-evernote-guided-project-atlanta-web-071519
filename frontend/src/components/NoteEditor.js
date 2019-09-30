@@ -31,6 +31,7 @@ export class NoteEditor extends Component {
         <div className="button-row">
           <input onClick={(e) => {this.props.submitEdits(e, this.state)}} className="button" type="submit" value="Save" />
           <button onClick= {(e) => this.props.handleCancel(e, this.props.noteToEdit.id)} type="button">Cancel</button>
+          <button onClick= {(e) => this.props.deleteNote(e, this.props.noteToEdit)} type="button">Delete</button>
         </div>
       </form>
     );
