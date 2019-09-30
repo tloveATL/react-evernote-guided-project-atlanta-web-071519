@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import Search from './Search';
 import Sidebar from './Sidebar';
 import Content from './Content';
+import swal from 'sweetalert';
 
 class NoteContainer extends Component {
   constructor(props) {
@@ -115,24 +116,35 @@ class NoteContainer extends Component {
   handleDelete =(e, note) => {
     e.persist()
     console.log("this note should be deleted!")
-    fetch(`http://localhost:3000/api/v1/notes/${note.id}`, {
-      method: "DELETE"
-      })
-        .then(resp => resp.json())
-        .then(result => {
-          const filteredNotes = [...this.state.allNotes].filter(
-            note => note.id !== this.state.selectedNoteID
-          )
-          console.log(result.message)
-          debugger;
-          this.setState({
-            allNotes: filteredNotes,
-            selectedNote: [],
-            selectedNoteId: null,
-            noteToEdit: []
+    swal({
+      title: "Are you sure you want to delete this note?",
+      text: "Once deleted, you will not be able to recover this note!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        fetch(`http://localhost:3000/api/v1/notes/${note.id}`, {
+          method: "DELETE"
           })
-        })
-    }
+            .then(resp => resp.json())
+            .then(result => {
+              const filteredNotes = [...this.state.allNotes].filter(
+                note => note.id !== this.state.selectedNoteID
+              )
+              console.log(result.message)
+              debugger;
+              this.setState({
+                allNotes: filteredNotes,
+                selectedNote: [],
+                selectedNoteId: null,
+                noteToEdit: []
+              })
+            })
+        }
+      })
+  }
 
   handleCancel = () => {
     console.log("these changes were not saved")
