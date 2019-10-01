@@ -8,10 +8,14 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-      <Header />
       <Switch>
         <Route exact path='/' render={() =>  <Landing />} />
-        <Route exact path='/notes' render={() => <NoteContainer /> } />
+        <Route exact path='/notes' render={() => 
+        <div>
+        <Header />
+        <NoteContainer /> 
+        </div>
+        } />
       </Switch>
       </div>
     );
