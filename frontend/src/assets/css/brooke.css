@@ -154,7 +154,8 @@ div.sidebar ul li:hover {
 
 .sidebar {
   width:25%;
-  overflow: scroll;
+  max-height: calc(100vh - 9rem);
+  overflow-y: auto;
 }
 
 .detail {
