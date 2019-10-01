@@ -7,7 +7,7 @@ const Header = () => {
         <li className="nav-item"><h2>(t)LoveNotes</h2></li>
       </ul>
     </div>
-  );
+  )
 }
 
 export default Header;

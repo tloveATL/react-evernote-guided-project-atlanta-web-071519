@@ -26,12 +26,30 @@ p.instructions {
 	text-align: center;
 }
 
+.landing {
+  font-family: monospace;
+  text-align: center;
+  font-size: 32px;
+}
+
+.landing-btn {
+  font-family: monospace;
+  font-weight: bold;
+}
+
 .note-editor input[name="title"] {
   font-size: 24px;
   font-weight: 700;
   border: 1px dashed grey;
   margin: 0.5em 0;
   box-sizing: border-box;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
 }
 
 .note-editor textarea {
@@ -43,7 +61,7 @@ p.instructions {
 
 .nav-bar {
   width: 100%;
-  background-image: linear-gradient(to right top, #8C33E3, #696CE8, #4A9EEC);
+  background-image: linear-gradient(to right top, #646ECB, #B793E6, #4A9EEC);
   background-repeat: no-repeat;
   font-family: 'IBM Plex Mono';
   font-size: 16px;
@@ -170,7 +188,7 @@ button, input[type="submit"] {
   margin-right: 10px;
   padding: 5px 35px;
   border: 0px;
-  background-image: linear-gradient(to right top, #8C33E3, #696CE8, #4A9EEC);
+  background-image: linear-gradient(to right top, #8C33E3, #B793E6, #4A9EEC);
   background-repeat: no-repeat;
   color: white;
   font-size: 14px;
@@ -178,7 +196,7 @@ button, input[type="submit"] {
 }
 
 button:hover, .nav-bar:hover, input[type="submit"]:hover {
-  background-image: linear-gradient(to right top, #8A2387, #E94057, #F27121);
+  background-image: linear-gradient(to right top, #B793E6, #8C33E3, #4A9EEC);
   background-repeat: no-repeat;
 }
 
