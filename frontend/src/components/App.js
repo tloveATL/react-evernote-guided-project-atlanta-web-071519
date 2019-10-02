@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import NoteContainer from './NoteContainer';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Landing from './Landing'
 
 class App extends Component {

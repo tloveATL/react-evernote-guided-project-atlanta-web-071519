@@ -6,7 +6,7 @@ function Landing() {
     return (
         <div>
             <h1 className="landing">
-            <img src={ require('../assets/images/logo.png') } />
+            <img alt="logo" src={ require('../assets/images/logo.png') } />
                 Welcome Back
                 <br></br>
                 <Link to='/notes'>

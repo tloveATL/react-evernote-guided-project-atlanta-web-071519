@@ -11,10 +11,10 @@ class NoteContainer extends Component {
     this.state = {
       allNotes: [],
       filteredNotes: [],
+      sortOption: [],
       selectedNote: [],
       noteToEdit: [],
-      selectedNoteID: null,
-      searchInput: ""
+      searchInput: "",
     }
   }
 
@@ -152,13 +152,44 @@ class NoteContainer extends Component {
       noteToEdit: []
     })
   }
+
+  handleSort = (e, option) => {
+    this.setState({
+      sortOption: option
+    })
+    
+    // if(option === "alphabetical"){
+    //   const noteTitleList = this.state.allNotes.map(note => {
+    //   return note.title
+    //   }
+    //   //map over all notes, look at note titles, but return the whole object (note)
+    //   )
+    //   const sortedByTitle = noteTitleList.sort()
+    //   // take list of notes and sort by title  
+    //   console.log(sortedByTitle)
+    // }
+    let noteSort = this.state.allNotes.slice()
+    if (this.state.sortOption === "alphabetical") {
+        return noteSort.sort((a, b) => {
+        let noteA = a.title.toUpperCase();
+        let noteB = b.title.toUpperCase();
+        if (noteA < noteB) {
+            return -1
+        }
+        if (noteA > noteB) {
+            return 1
+        }
+            return 0
+    })
+    }
+  }
   
   render() {
     return (
       <Fragment>
         <Search handleSearchInput={this.handleSearchInput}/>
         <div className='container'>
-          <Sidebar createNote={this.handleCreateNewNote} selectNote={this.handleSelectNote} notes={this.filteredDisplay()}/>
+          <Sidebar handleSort={this.handleSort} createNote={this.handleCreateNewNote} selectNote={this.handleSelectNote} notes={this.filteredDisplay()}/>
           <Content deleteNote={this.handleDelete} 
                   selectedNoteID={this.state.selectedNoteID} 
                   handleCancel={this.handleCancel} 
