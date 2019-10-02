@@ -4,7 +4,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 
 export class NoteItem extends Component {
 
-  truncate = () => this.props.note.body.length > 15 ? `${this.props.note.body.substring(0, 15)}...` : this.props.note.body
+  truncate = () => this.props.note.body.length > 25 ? `${this.props.note.body.substring(0, 25)}...` : this.props.note.body
 
   render() {
   dayjs.extend(relativeTime)

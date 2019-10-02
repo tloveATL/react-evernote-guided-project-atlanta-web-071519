@@ -44,7 +44,8 @@ class NoteContainer extends Component {
   handleSearchInput = (e) => {
     console.log("search results", e.target.value)
     this.setState({
-      searchInput: e.target.value
+      searchInput: e.target.value,
+      selectedNote: []
     })
   }
 
@@ -134,7 +135,6 @@ class NoteContainer extends Component {
                 note => note.id !== this.state.selectedNoteID
               )
               console.log(result.message)
-              debugger;
               this.setState({
                 allNotes: filteredNotes,
                 selectedNote: [],
